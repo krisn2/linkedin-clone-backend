@@ -20,12 +20,27 @@ mongoose.connect(process.env.MONGO_URL)
 
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://linkedin-clone-frontend-one.vercel.app",
+];
+
 app.use(helmet());
+
 app.use(cors({
-  origin: FRONTEND_URL,
-  methods: ['GET','POST','PUT','DELETE'],
-  allowedHeaders: ['Content-Type','Authorization'],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.warn("Blocked CORS origin:", origin);
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
+
 app.use(express.json());
 app.use(morgan('dev'));
 

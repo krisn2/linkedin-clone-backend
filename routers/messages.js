@@ -4,7 +4,6 @@ const Conversation = require("../models/Conversation");
 const Message = require("../models/Message");
 const router = express.Router();
 
-// Get user's conversations
 router.get("/conversations", authenticate, async (req, res) => {
   try {
     const convos = await Conversation.find({
@@ -16,7 +15,6 @@ router.get("/conversations", authenticate, async (req, res) => {
   }
 });
 
-// Get all messages between two users
 router.get("/:userId", authenticate, async (req, res) => {
   try {
     const { userId } = req.params;
