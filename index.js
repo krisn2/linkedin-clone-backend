@@ -8,8 +8,6 @@ const path = require('path');
 const http = require("http");
 const { Server } = require("socket.io");
 
-
-
 dotenv.config();
 
 
@@ -19,8 +17,8 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173", // frontend URL
-    methods: ["GET", "POST"],
+    origin: ["http://localhost:5173", "https://linkedin-clone-frontend-one.vercel.app/"],
+    methods: ["GET", "POST","PUT", "DELETE"],
   },
 });
 
